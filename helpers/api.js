@@ -49,6 +49,7 @@ export function getWeatherData(city) {
                             image: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
                             main: data.weather[0].main
                         }
+                        console.log(weatherData)
                     city.innerText = weatherData.name
                     celcius.innerText = `${Math.trunc(weatherData.temperature)}ºC`
                     feelslike.innerText = `Feels like ${Math.trunc(weatherData.feelsLike)}ºC`
@@ -60,7 +61,8 @@ export function getWeatherData(city) {
                     sunrise.innerText = hourMinutes(weatherData.sunrise,weatherData.timeZone)
                     sunset.innerText = hourMinutes(weatherData.sunset,weatherData.timeZone)
                     date.innerText = getDate(weatherData.timeZone)
-                        hour.innerText = getCurrentHourMinute(weatherData.timeZone)
+                    hour.innerText = getCurrentHourMinute(weatherData.timeZone)
+                    console.log(weatherData.timeZone)
 
                 }).catch(err => {
                 console.error(err.message)
@@ -143,8 +145,6 @@ export function get5DaysForecast(city) {
                         }
                     ]
                     const ulForecast = document.getElementById("forecastList")
-                    console.log(data)
-                    console.log(currentDay)
                     fiveDays.forEach(day => {
 
                         let {temperature1, date, icon} = day
@@ -275,7 +275,6 @@ export function generateWeather5daysForecast(lat, lon) {
                 }
             ]
             const ulForecast = document.getElementById("forecastList")
-            console.log(data)
             fiveDays.forEach(day => {
 
                 let {temperature1, date, icon} = day

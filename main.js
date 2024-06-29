@@ -14,10 +14,18 @@ themeTogller.addEventListener("change", (e) => {
  body.classList.toggle("light");
  const svgs = document.querySelectorAll("svg")
  svgs.forEach(svg => {
-  svg.setAttribute("stroke", "black")
+  if (themeTogller.checked) {
+   svg.setAttribute("stroke", "black")
+   iconSearch.setAttribute("stroke", "none")
+   iconSearch2.setAttribute("stroke", "none")
+  }else {
+   svg.setAttribute("stroke", "currentColor")
+   iconSearch.setAttribute("stroke", "none")
+   iconSearch2.setAttribute("stroke", "none")
+  }
+
  })
- iconSearch.setAttribute("stroke", "none")
- iconSearch2.setAttribute("stroke", "none")
+
 
 })
 inputCity.addEventListener("keypress" ,(e)=>{

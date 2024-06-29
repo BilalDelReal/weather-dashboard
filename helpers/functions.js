@@ -524,7 +524,7 @@ export function getCurrentHourMinute(timezoneOffsetSeconds2){
     const adjustedDate2 = new Date(currentDate2.getTime() + timezoneOffsetMilliseconds2);
 
 // Obtener el nombre del día y el mes
-    const options2 = { weekday: 'long', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'UTC' };
+    const options2 = {hour: '2-digit', minute: '2-digit', timeZone: 'UTC' };
     const formatter = new Intl.DateTimeFormat('en-UK', options2);
 
 // Formatear la fecha ajustada
@@ -534,7 +534,7 @@ export function getCurrentHourMinute(timezoneOffsetSeconds2){
 
 // Mostrar la fecha ajustada
 
-    return ArrformattedDate[1]
+    return ArrformattedDate
 }
 export function separateDate(date){
     const newDate = date.split(" ")[0]
