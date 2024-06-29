@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <title>Weather dashboard</title>
+</head>
+<body class=" relative xl:overflow-hidden bg-[#373636] max-w-[1271px] xl:max-w-full ove">
+<div id="err404"
+     class="hidden absolute  w-screen h-screen top-0 left-0 z-10 flex justify-center items-center bg-[#373636] ">
+    <div class=" flex flex-col mb-[30rem] gap-y-24 items-center">
+        <h1 class="text-8xl leading-none">ERROR 404</h1>
+        <button id="btn404"
+                class="text-2xl bg-[#1B1B1B] py-5 min-w-[400px] rounded-2xl drop-shadow-2xl hover:bg-[rgba(27,27,27,50%)]">
+            Volver a la pagina de inicio
+        </button>
+    </div>
+</div>
+<header class="w-full xl:max-w-[1357px] mx-auto mt-[63px] flex items-center xl:gap-x-[76px] justify-between max-w-[890px]">
+    <div class="min-w-28 flex flex-col justify-between items-center">
+        <label class="ui-switch">
+            <input id="toggleThem" type="checkbox">
+            <div class="slider">
+                <div class="circle"></div>
+            </div>
+        </label>
+        <span class="font-extrabold light-black-text">Dark Mode</span>
+    </div>
+    <div class="group flex items-center relative max-w-[700px] hidden xl:block">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="search-icon" stroke="none">
+            <g>
+                <path
+                        d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
+                ></path>
+            </g>
+        </svg>
+
+        <input
+                id="cityInput"
+                class="input containerInput cityInput"
+                type="search"
+                placeholder="Search for your preffered city..."
+                name="searchbar"
+        />
+    </div>
+
+    <!--    <div id="containerInput" class="bg-[#444444] flex items-center h-fit py-2 rounded-[40px] gap-x-[29px] min-w-[803px] drop-shadow-lg">-->
+    <!--        <div class="ml-[33px]">-->
+    <!--            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="46" viewBox="0 0 24 24" fill="none"-->
+    <!--                 stroke="#828282" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+    <!--                 class="icon icon-tabler icons-tabler-outline icon-tabler-search">-->
+    <!--                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+    <!--                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"/>-->
+    <!--                <path d="M21 21l-6 -6"/>-->
+    <!--            </svg>-->
+    <!--        </div>-->
+    <!--        <input id="cityInput" class="w-[500px]" type="text" placeholder="Search for your preffered city...">-->
+    <!--    </div>-->
+    <div class="flex flex-row gap-x-12">
+        <div class=" xl:hidden containerInput p-5 overflow-hidden w-[60px] h-[60px] hover:w-[600px] bg-[#444444] shadow-[2px_2px_20px_rgba(0,0,0,0.08)] rounded-full flex group items-center hover:duration-300 duration-300">
+            <div class="flex items-center justify-center fill-[#B7B7B7]">
+                <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        id="Isolation_Mode"
+                        data-name="Isolation Mode"
+                        viewBox="0 0 24 24"
+                        width="22"
+                        height="22">
+                    <path
+                            d="M18.9,16.776A10.539,10.539,0,1,0,16.776,18.9l5.1,5.1L24,21.88ZM10.5,18A7.5,7.5,0,1,1,18,10.5,7.507,7.507,0,0,1,10.5,18Z"
+                    ></path>
+                </svg>
+            </div>
+            <input
+                    type="text"
+                    class="outline-none text-[20px] bg-transparent w-full text-white font-normal px-4 cityInput2"
+                    placeholder="Search for your preffered city..."/>
+        </div>
+
+        <button id="btnCurrent" class="btn-location xl:max-w-[292px] xl:min-w-[292px]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none"
+                 stroke="black" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                 class="icon icon-tabler icons-tabler-outline icon-tabler-current-location">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/>
+                <path d="M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0"/>
+                <path d="M12 2l0 2"/>
+                <path d="M12 20l0 2"/>
+                <path d="M20 12l2 0"/>
+                <path d="M2 12l2 0"/>
+            </svg>
+            <strong class="text-[1.375rem] hidden xl:block">Current Location</strong>
+        </button>
+    </div>
+</header>
+<main class="w-full xl:max-w-[1357px] mx-auto max-w-[1271px]">
+<!--        <section id="top-side" class="mt-[49px] flex xl:gap-x-[55px] xl:gap-y-0 xl:flex-row flex-col max-w-[800px] mx-auto xl:max-w-[1357px] gap-y-10">-->
+<!--            <div class="xl:min-w-[510px] flex flex-col items-center shadow-[10px_10px_4px_rgba(0,0,0,0.5)] bg-[#1B1B1B] rounded-[30px] container min-w-[800px]">-->
+<!--                <h1 class="mt-[53px] mb-[40px] font-bold text-[2.25rem]">Athens</h1>-->
+<!--                <p class="text-8xl font-bold ">09:03</p>-->
+<!--                <span class="text-xl mb-[48px]">Thursday, 31 Aug</span>-->
+<!--            </div>-->
+<!--            <div class="drop-shadow-2xl w-full flex justify-between flex-row items-center shadow-[10px_10px_4px_rgba(0,0,0,0.5)] bg-[#1B1B1B] rounded-[30px] container xl:min-w-[780px] min-w-[800px]">-->
+<!--                <div id="left-side" class=" flex flex-col gap-y-[26px] h-full mt-12">-->
+<!--                    <div id="celcius" class="ml-6">-->
+<!--                        <p class="text-[5rem] font-bold leading-none mb-3">24ºC</p>-->
+<!--                        <span class="text-[1.25rem] font-semibold">Feels like:<span class="text-[2rem]"> 22ºC</span></span>-->
+<!--                    </div>-->
+<!--                    <div class="flex flex-col gap-y-[10px] ml-[50px]">-->
+<!--                        <div id="sunRise" class="flex gap-x-[10px] items-center">-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"-->
+<!--                                 stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                 class="icon icon-tabler icons-tabler-outline icon-tabler-sunrise">-->
+<!--                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                                <path d="M3 17h1m16 0h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7m-9.7 5.7a4 4 0 0 1 8 0"/>-->
+<!--                                <path d="M3 21l18 0"/>-->
+<!--                                <path d="M12 9v-6l3 3m-6 0l3 -3"/>-->
+<!--                            </svg>-->
+<!--                            <div>-->
+<!--                                <p class="text-[1.25rem] font-semibold">Sunrise</p>-->
+<!--                                <span class="text-[1.25rem] font-semibold">06:37 AM</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div id="sunSet" class="flex gap-x-[10px] items-center">-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"-->
+<!--                                 stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                 class="icon icon-tabler icons-tabler-outline icon-tabler-sunset">-->
+<!--                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                                <path d="M3 17h1m16 0h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7m-9.7 5.7a4 4 0 0 1 8 0"/>-->
+<!--                                <path d="M3 21l18 0"/>-->
+<!--                                <path d="M12 3v6l3 -3m-6 0l3 3"/>-->
+<!--                            </svg>-->
+<!--                            <div>-->
+<!--                                <p class="text-[1.25rem] font-semibold">Sunset</p>-->
+<!--                                <span class="text-[1.25rem] font-semibold">20:37 AM</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--                <div id="middle-side" class="flex flex-col items-center h-full mt-12 gap-y-9">-->
+<!--                    <img class="min-w-[180px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                    <p class="font-semibold text-[2rem]">Sunny</p>-->
+<!--                </div>-->
+<!--                <div id="right-side" class="flex flex-wrap gap-x-3 gap-y-14 max-w-[247px] min-w-[247px] ">-->
+<!--                    <div id="humidity" class="flex flex-col items-center gap-y-2 w-[107px]">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="50" viewBox="0 0 24 24" fill="none"-->
+<!--                             stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                             class="icon icon-tabler icons-tabler-outline icon-tabler-ripple">-->
+<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                            <path d="M3 7c3 -2 6 -2 9 0s6 2 9 0"/>-->
+<!--                            <path d="M3 17c3 -2 6 -2 9 0s6 2 9 0"/>-->
+<!--                            <path d="M3 12c3 -2 6 -2 9 0s6 2 9 0"/>-->
+<!--                        </svg>-->
+<!--                        <p class="text-[1.25rem] font-semibold">41%</p>-->
+<!--                        <p>Humidity</p>-->
+<!--                    </div>-->
+<!--                    <div id="wind-speed" class="flex flex-col items-center gap-y-2 w-[107px]">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="50" viewBox="0 0 24 24" fill="none"-->
+<!--                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                             class="icon icon-tabler icons-tabler-outline icon-tabler-wind">-->
+<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                            <path d="M5 8h8.5a2.5 2.5 0 1 0 -2.34 -3.24"/>-->
+<!--                            <path d="M3 12h15.5a2.5 2.5 0 1 1 -2.34 3.24"/>-->
+<!--                            <path d="M4 16h5.5a2.5 2.5 0 1 1 -2.34 3.24"/>-->
+<!--                        </svg>-->
+<!--                        <p class="text-[1.25rem] font-semibold">2km/h</p>-->
+<!--                        <p>Wind Speed</p>-->
+<!--                    </div>-->
+<!--                    <div id="Pressure" class="flex flex-col items-center gap-y-2 w-[107px]">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="50" viewBox="0 0 24 24" fill="none"-->
+<!--                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                             class="icon icon-tabler icons-tabler-outline icon-tabler-parking-circle">-->
+<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                            <path d="M10 16v-8h3.334c.92 0 1.666 .895 1.666 2s-.746 2 -1.666 2h-3.334"/>-->
+<!--                            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/>-->
+<!--                        </svg>-->
+<!--                        <p class="text-[1.25rem] font-semibold">41%</p>-->
+<!--                        <p>Humidity</p>-->
+<!--                    </div>-->
+<!--                    <div id="UV" class="flex flex-col items-center gap-y-2 w-[107px]">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="50" viewBox="0 0 24 24" fill="none"-->
+<!--                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                             class="icon icon-tabler icons-tabler-outline icon-tabler-uv-index">-->
+<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                            <path d="M3 12h1m16 0h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7m-9.7 5.7a4 4 0 1 1 8 0"/>-->
+<!--                            <path d="M12 4v-1"/>-->
+<!--                            <path d="M13 16l2 5h1l2 -5"/>-->
+<!--                            <path d="M6 16v3a2 2 0 1 0 4 0v-3"/>-->
+<!--                        </svg>-->
+<!--                        <p class="text-[1.25rem] font-semibold">8</p>-->
+<!--                        <p>UV</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--        <section id="bot-side" class="mb-20 mt-[49px] flex xl:gap-x-[55px] xl:gap-y-0 xl:flex-row flex-col max-w-[800px] mx-auto gap-y-10 xl:max-w-[1357px]">-->
+<!--            <div class="xl:min-w-[432px] flex flex-col items-center shadow-[10px_10px_4px_rgba(0,0,0,0.5)] bg-[#444444] rounded-[30px] drop-shadow-2xl container min-w-[800px]">-->
+<!--                <h1 class="mt-[20px] mb-[10px] font-bold text-[2rem]">5 Days Forecast:</h1>-->
+<!--                <ul class="min-w-[370px] mb-[20px]">-->
+<!--                    <li class="flex items-center gap-x-[53px]">-->
+<!--                        <img class="max-w-[60px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                        <p class="text-[1.5rem]">20ºC</p>-->
+<!--                        <P class="text-[1.5rem]">Friday, 1sep</P>-->
+<!--                    </li>-->
+<!--                    <li class="flex items-center gap-x-[53px]">-->
+<!--                        <img class="max-w-[60px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                        <p class="text-[1.5rem]">20ºC</p>-->
+<!--                        <P class="text-[1.5rem]">Friday, 1sep</P>-->
+<!--                    </li>-->
+<!--                    <li class="flex items-center gap-x-[53px]">-->
+<!--                        <img class="max-w-[60px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                        <p class="text-[1.5rem]">20ºC</p>-->
+<!--                        <P class="text-[1.5rem]">Friday, 1sep</P>-->
+<!--                    </li>-->
+<!--                    <li class="flex items-center gap-x-[53px]">-->
+<!--                        <img class="max-w-[60px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                        <p class="text-[1.5rem]">20ºC</p>-->
+<!--                        <P class="text-[1.5rem]">Friday, 1sep</P>-->
+<!--                    </li>-->
+<!--                    <li class="flex items-center gap-x-[53px]">-->
+<!--                        <img class="max-w-[60px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                        <p class="text-[1.5rem]">20ºC</p>-->
+<!--                        <P class="text-[1.5rem]">Friday, 1sep</P>-->
+<!--                    </li>-->
+
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="xl:gap-y-24  drop-shadow-2xl w-full flex flex-col items-center shadow-[10px_10px_4px_rgba(0,0,0,0.5)] bg-[#444444] rounded-[30px] xl:min-w-[870px] container min-w-[800px] pb-9">-->
+
+<!--                <h1 class="text-[2rem] font-bold mt-3">Hourly Forecast:</h1>-->
+
+<!--                <div class="max-w-[710px] mx-auto ">-->
+<!--                    <ul class="flex justify-around gap-x-4">-->
+<!--                        <li class="flex flex-col items-center bg-[#373636] w-[130px] rounded-[40px] gap-y-2 py-3 day">-->
+<!--                            <p class="text-[1.5rem]">12:00</p>-->
+<!--                            <img class="max-w-[60px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                            <p class="text-[1.5rem]">26ºC</p>-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"-->
+<!--                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                 class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-move-up">-->
+<!--                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                                <path d="M12 13v-10"/>-->
+<!--                                <path d="M9 6l3 -3l3 3"/>-->
+<!--                                <path d="M12 17a2 2 0 1 1 0 4a2 2 0 0 1 0 -4z"/>-->
+<!--                            </svg>-->
+<!--                            <p class="text-[1.5rem]">3km/h</p>-->
+<!--                        </li>-->
+<!--                        <li class="flex flex-col items-center bg-[#373636] w-[130px] rounded-[40px] gap-y-2 py-3 day">-->
+<!--                            <p class="text-[1.5rem]">12:00</p>-->
+<!--                            <img class="max-w-[60px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                            <p class="text-[1.5rem]">26ºC</p>-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"-->
+<!--                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                 class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-move-up">-->
+<!--                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                                <path d="M12 13v-10"/>-->
+<!--                                <path d="M9 6l3 -3l3 3"/>-->
+<!--                                <path d="M12 17a2 2 0 1 1 0 4a2 2 0 0 1 0 -4z"/>-->
+<!--                            </svg>-->
+<!--                            <p class="text-[1.5rem]">3km/h</p>-->
+<!--                        </li>-->
+<!--                        <li class="flex flex-col items-center bg-[#373636] w-[130px] rounded-[40px] gap-y-2 py-3 day">-->
+<!--                            <p class="text-[1.5rem]">12:00</p>-->
+<!--                            <img class="max-w-[60px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                            <p class="text-[1.5rem]">26ºC</p>-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"-->
+<!--                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                 class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-move-up">-->
+<!--                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                                <path d="M12 13v-10"/>-->
+<!--                                <path d="M9 6l3 -3l3 3"/>-->
+<!--                                <path d="M12 17a2 2 0 1 1 0 4a2 2 0 0 1 0 -4z"/>-->
+<!--                            </svg>-->
+<!--                            <p class="text-[1.5rem]">3km/h</p>-->
+<!--                        </li>-->
+<!--                        <li class="flex flex-col items-center bg-[#373636] w-[130px] rounded-[40px] gap-y-2 py-3 evening">-->
+<!--                            <p class="text-[1.5rem]">12:00</p>-->
+<!--                            <img class="max-w-[60px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                            <p class="text-[1.5rem]">26ºC</p>-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"-->
+<!--                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                 class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-move-up">-->
+<!--                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                                <path d="M12 13v-10"/>-->
+<!--                                <path d="M9 6l3 -3l3 3"/>-->
+<!--                                <path d="M12 17a2 2 0 1 1 0 4a2 2 0 0 1 0 -4z"/>-->
+<!--                            </svg>-->
+<!--                            <p class="text-[1.5rem]">3km/h</p>-->
+<!--                        </li>-->
+<!--                        <li class="flex flex-col items-center bg-[#373636] w-[130px] rounded-[40px] gap-y-2 py-3 evening">-->
+<!--                            <p class="text-[1.5rem]">12:00</p>-->
+<!--                            <img class="max-w-[60px] " src="assets/images/yellow-sun-16526.svg" alt="">-->
+<!--                            <p class="text-[1.5rem]">26ºC</p>-->
+<!--                            <div class="rotate-[210deg]">-->
+<!--                                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"-->
+<!--                                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                                     class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-move-up">-->
+<!--                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                                    <path d="M12 13v-10"/>-->
+<!--                                    <path d="M9 6l3 -3l3 3"/>-->
+<!--                                    <path d="M12 17a2 2 0 1 1 0 4a2 2 0 0 1 0 -4z"/>-->
+<!--                                </svg>-->
+<!--                            </div>-->
+<!--                            <p class="text-[1.5rem]">3km/h</p>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+
+</main>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
